@@ -1,0 +1,25 @@
+trigger:
+- main
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Azure for Students(6dc7f650-c4bf-4b1e-a0ae-e6a36ca60bc3)'
+    backendAzureRmResourceGroupName: 'tfstaterg'
+    backendAzureRmStorageAccountName: 'tfstatewolfiez'
+    backendAzureRmContainerName: 'tfstate1'
+    backendAzureRmKey: 'tfstate.tf'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'Azure for Students(6dc7f650-c4bf-4b1e-a0ae-e6a36ca60bc3)'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'Azure for Students(6dc7f650-c4bf-4b1e-a0ae-e6a36ca60bc3)'
